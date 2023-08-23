@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "eslint-plugin-spellcheck": "^0.0.20"
+  }
+}
