@@ -31,6 +31,6 @@ This example demonstrates how to create a custom template for rows in the editin
 
 ## More Examples
 
-- (DevExtreme DataGrid – Create a custom Pop-up Edit Form using Popup and Form components)[https://github.com/DevExpress-Examples/devextreme-datagrid-custom-editing-form]
-- (DataGrid for DevExtreme - How to handle different value types with editCellTemplate for the same column)[https://github.com/DevExpress-Examples/devextreme-datagrid-dynamic-type-column]
-- (DataGrid for DevExtreme - How to define DataGrid in the Popup Edit Form to edit a data field)[https://github.com/DevExpress-Examples/devextreme-datagrid-show-grid-in-popup-edit-form]
+- [DevExtreme DataGrid – Create a custom Pop-up Edit Form using Popup and Form components](https://github.com/DevExpress-Examples/devextreme-datagrid-custom-editing-form)
+- [DataGrid for DevExtreme - How to handle different value types with editCellTemplate for the same column](https://github.com/DevExpress-Examples/devextreme-datagrid-dynamic-type-column)
+- [DataGrid for DevExtreme - How to define DataGrid in the Popup Edit Form to edit a data field](https://github.com/DevExpress-Examples/devextreme-datagrid-show-grid-in-popup-edit-form)
