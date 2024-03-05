@@ -1,29 +1,110 @@
-@using ASP_NET_Core.Models
+@using ASP.NET_Core.Models
+@model ASP.NET_Core.Models.ViewModel
 
-<h2>Home</h2>
-
-@(Html.DevExtreme().DataGrid<SampleOrder>()
-    .ShowBorders(true)
-    .DataSource(d => d.Mvc().Controller("SampleData").LoadAction("Get").Key("OrderID"))
-    .Columns(columns => {
-        columns.AddFor(m => m.OrderID);
-        columns.AddFor(m => m.OrderDate);
-        columns.AddFor(m => m.CustomerName);
-        columns.AddFor(m => m.ShipCountry);
-        columns.AddFor(m => m.ShipCity);
-    })
-    .Paging(p => p.PageSize(10))
-    .FilterRow(f => f.Visible(true))
-    .HeaderFilter(f => f.Visible(true))
-    .GroupPanel(p => p.Visible(true))
-    .Grouping(g => g.AutoExpandAll(false))
-    .RemoteOperations(true)
-    .Summary(s => s
-        .TotalItems(totalItems => {
-            totalItems.AddFor(m => m.ShipCity).SummaryType(SummaryType.Count);
-        })
-        .GroupItems(groupItems => {
-            groupItems.Add().SummaryType(SummaryType.Count);
-        })
+@(Html.DevExtreme().DataGrid<Employee>()
+    .ID("gridContainer")
+    .DataSource(d => d.Mvc()
+        .Controller("EmployeesData")
+        .LoadAction("Get")
+        .UpdateAction("Put")
+        .InsertAction("Post")
+        .DeleteAction("Delete")
+        .Key("ID")
     )
+    .OnInitialized("onInitialized")
+    .DataRowTemplate(@<text>
+        <% if(isEditing) { %>
+            @(await Html.PartialAsync("_EditRowTemplate", Model.Editors))
+        <% } else { %>
+            @(await Html.PartialAsync("_DataRowTemplate"))
+        <% } %>
+    </text>)
+    .RowAlternationEnabled(true)
+    .ColumnAutoWidth(true)
+    .ShowBorders(true)
+    .Columns(columns =>
+    {
+        columns.AddFor(m => m.Prefix)
+            .Caption("Title")
+            .Width(70);
+        columns.AddFor(m => m.FirstName);
+        columns.AddFor(m => m.LastName);
+        columns.AddFor(m => m.Position);
+        columns.AddFor(m => m.BirthDate)
+            .DataType(GridColumnDataType.Date);
+        columns.AddFor(m => m.HireDate)
+            .DataType(GridColumnDataType.Date);
+        columns.Add()
+            .Width(160);
+    })
+    .Toolbar(toolbar => 
+    {
+        toolbar.Items(items => 
+        {
+            items.Add()
+                .Location(ToolbarItemLocation.After)
+                .Widget(w => w.Button()
+                    .Text("Add new item")
+                    .OnClick("addButtonClick")
+                );
+        });
+    })
+    .OnInitNewRow("onInitNewRow")
 )
+
+<script>
+    let dataGrid,
+        formatDate = new Intl.DateTimeFormat("en-US").format,
+        changes = [];
+
+    function onInitialized(e) {
+        dataGrid = e.component;
+    }
+
+    function onInitNewRow(e) {
+        e.data.Prefix = '';
+        e.data.FirstName = '';
+        e.data.LastName = '';
+        e.data.Position = '';
+        e.data.BirthDate = new Date('1986/07/08');
+        e.data.HireDate = new Date('1986/07/08');
+        e.data.Notes = '';
+    }
+
+    function addButtonClick() {
+        dataGrid.cancelEditData();
+        dataGrid.addRow();
+        changes = dataGrid.option('editing.changes');
+    }
+
+    function editButtonClick(data) {
+        const rowIndex = dataGrid.getRowIndexByKey(data.ID);
+        dataGrid.cancelEditData();
+        dataGrid.editRow(rowIndex);
+        changes = dataGrid.option('editing.changes');
+    }
+
+    function deleteButtonClick(data) {
+        const rowIndex = dataGrid.getRowIndexByKey(data.ID);
+        dataGrid.deleteRow(rowIndex);
+    }
+
+    function saveButtonClick() {
+        dataGrid.option('editing.changes', changes);
+        dataGrid.saveEditData();
+        dataGrid.refresh();
+    }
+
+    function cancelButtonClick(data) {
+        dataGrid.cancelEditData();
+        dataGrid.refresh();
+    }
+
+    function onValueChanged(e, dataField, key) {
+        if (!changes.length) {
+            changes.push({ data: { [dataField]: e.value }, key, type: 'update' });
+        } else {
+            changes[0].data = { ...changes[0].data, [dataField]: e.value };
+        }
+    }
+</script>
