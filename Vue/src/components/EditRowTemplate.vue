@@ -1,9 +1,9 @@
 <script setup lang="ts">
-	import { DxButton, DxTextBox, DxDateBox, DxTextArea } from 'devextreme-vue';
-	defineProps(['rowInfo']);
-	defineEmits(['onValueChanged', 'onSaveButtonClick', 'onCancelButtonClick']);
-	const formatDate = new Intl.DateTimeFormat('en-US').format;
-	const editors: string[] = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
+  import { DxButton, DxTextBox, DxDateBox, DxTextArea } from 'devextreme-vue';
+  defineProps(['rowInfo']);
+  defineEmits(['onValueChanged', 'onSaveButtonClick', 'onCancelButtonClick']);
+  const formatDate = new Intl.DateTimeFormat('en-US').format;
+  const editors: string[] = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
 </script>
 
 <template>

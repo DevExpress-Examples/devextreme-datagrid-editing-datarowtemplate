@@ -1,8 +1,8 @@
 <script setup lang="ts">
-	import { DxButton } from 'devextreme-vue';
-	defineProps(['rowInfo']);
-	defineEmits(['onEditButtonClick', 'onDeleteButtonClick']);
-	const formatDate = new Intl.DateTimeFormat('en-US').format;
+  import { DxButton } from 'devextreme-vue';
+  defineProps(['rowInfo']);
+  defineEmits(['onEditButtonClick', 'onDeleteButtonClick']);
+  const formatDate = new Intl.DateTimeFormat('en-US').format;
 </script>
 
 <template>
