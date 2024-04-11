@@ -7,38 +7,38 @@
 </script>
 
 <template>
-	<tr class="main-row">
-		<td v-for="editor in editors">
-			<div v-if="editor != 'BirthDate' && editor != 'HireDate'">
-				<DxTextBox
-					:value="rowInfo.data[editor]"
-					@value-changed="$emit('onValueChanged', $event, editor, rowInfo.data.ID)"
-				></DxTextBox>
-			</div>
-			<div v-else>
-				<DxDateBox
-					:value="formatDate(new Date(rowInfo.data[editor]))"
-					@value-changed="$emit('onValueChanged', $event, editor, rowInfo.data.ID)"
-				></DxDateBox>
-			</div>
-		</td>
-		<td rowSpan="2">
-			<DxButton
-				text="Save"
-				@click="$emit('onSaveButtonClick')"
-			></DxButton>
-			<DxButton
-				text="Cancel"
-				@click="$emit('onCancelButtonClick')"
-			></DxButton>
-		</td>
-	</tr>
-	<tr class="notes-row">
-		<td colspan="6">
-			<DxTextArea
-				:value="rowInfo.data.Notes"
-				@value-changed="$emit('onValueChanged', $event, 'Notes', rowInfo.data.ID)"
-			></DxTextArea>
-		</td>
-	</tr>
+  <tr class="main-row">
+    <td v-for="editor in editors">
+      <div v-if="editor != 'BirthDate' && editor != 'HireDate'">
+        <DxTextBox
+          :value="rowInfo.data[editor]"
+          @value-changed="$emit('onValueChanged', $event, editor, rowInfo.data.ID)"
+        ></DxTextBox>
+      </div>
+      <div v-else>
+        <DxDateBox
+          :value="formatDate(new Date(rowInfo.data[editor]))"
+          @value-changed="$emit('onValueChanged', $event, editor, rowInfo.data.ID)"
+        ></DxDateBox>
+      </div>
+    </td>
+    <td rowSpan="2">
+      <DxButton
+        text="Save"
+        @click="$emit('onSaveButtonClick')"
+      ></DxButton>
+      <DxButton
+        text="Cancel"
+        @click="$emit('onCancelButtonClick')"
+      ></DxButton>
+    </td>
+  </tr>
+  <tr class="notes-row">
+    <td colspan="6">
+      <DxTextArea
+        :value="rowInfo.data.Notes"
+        @value-changed="$emit('onValueChanged', $event, 'Notes', rowInfo.data.ID)"
+      ></DxTextArea>
+    </td>
+  </tr>
 </template>
