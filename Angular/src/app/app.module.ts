@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import {
-  DxDataGridModule, 
-  DxButtonModule, 
-  DxTextBoxModule, 
-  DxDateBoxModule, 
-  DxTextAreaModule 
+  DxDataGridModule,
+  DxButtonModule,
+  DxTextBoxModule,
+  DxDateBoxModule,
+  DxTextAreaModule,
 } from 'devextreme-angular';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';

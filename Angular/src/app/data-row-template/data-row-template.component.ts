@@ -1,7 +1,7 @@
-import { 
-  Component, 
-  Input, Output, 
-  EventEmitter 
+import {
+  Component,
+  Input, Output,
+  EventEmitter,
 } from '@angular/core';
 import { DataRowTemplateData } from 'devextreme/ui/data_grid';
 

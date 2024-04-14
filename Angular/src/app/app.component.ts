@@ -9,8 +9,11 @@ import { AppService, Employee, ValueChanged } from './app.service';
 })
 export class AppComponent {
   dataGrid!: DataGrid;
+
   employees: Employee[];
+
   changes: any;
+  
   editors: string[];
 
   constructor(service: AppService) {
@@ -18,11 +21,11 @@ export class AppComponent {
     this.changes = [];
     this.editors = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
   }
-  saveGridInstance(e: InitializedEvent) {
+  saveGridInstance(e: InitializedEvent): void {
     this.dataGrid = e.component!;
   }
 
-  onInitNewRow = (e: InitNewRowEvent) => {
+  onInitNewRow = (e: InitNewRowEvent): void => {
     e.data.Prefix = '';
     e.data.FirstName = '';
     e.data.LastName = '';
@@ -32,13 +35,13 @@ export class AppComponent {
     e.data.Notes = '';
   };
 
-  addNewItem = () => {
-    this.dataGrid.cancelEditData();
+  addNewItem = (): void => {
+    void this.dataGrid.cancelEditData();
     this.dataGrid.addRow();
     this.changes = this.dataGrid.option('editing.changes');
   };
 
-  onValueChanged = (val: ValueChanged) => {
+  onValueChanged = (val: ValueChanged): void => {
     if (!this.changes.length) {
       this.changes.push({ data: { [val.dataField]: val.e.value }, key: val.key, type: 'update' });
     } else {
@@ -46,26 +49,26 @@ export class AppComponent {
     }
   };
 
-  onEditButtonClick = (ID: number) => {
+  onEditButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid.getRowIndexByKey(ID);
-    this.dataGrid.cancelEditData();
+    void this.dataGrid.cancelEditData();
     this.dataGrid.editRow(rowIndex);
     this.changes = this.dataGrid.option('editing.changes');
   };
 
-  onDeleteButtonClick = (ID: number) => {
+  onDeleteButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid.getRowIndexByKey(ID);
     this.dataGrid.deleteRow(rowIndex);
   };
 
-  onSaveButtonClick = () => {
+  onSaveButtonClick = (): void => {
     this.dataGrid.option('editing.changes', this.changes);
-    this.dataGrid.saveEditData();
+    void this.dataGrid.saveEditData();
     this.dataGrid.refresh();
   };
 
-  onCancelButtonClick = () => {
-    this.dataGrid.cancelEditData();
+  onCancelButtonClick = (): void => {
+    void this.dataGrid.cancelEditData();
     this.dataGrid.refresh();
   };
 }
