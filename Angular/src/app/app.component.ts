@@ -8,12 +8,12 @@ import { AppService, Employee, ValueChanged } from './app.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  dataGrid!: DataGrid;
+  dataGrid!: DataGrid | undefined;
 
   employees: Employee[];
 
   changes: any;
-  
+
   editors: string[];
 
   constructor(service: AppService) {
@@ -21,8 +21,9 @@ export class AppComponent {
     this.changes = [];
     this.editors = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
   }
+
   saveGridInstance(e: InitializedEvent): void {
-    this.dataGrid = e.component!;
+    this.dataGrid = e.component;
   }
 
   onInitNewRow = (e: InitNewRowEvent): void => {
@@ -35,10 +36,10 @@ export class AppComponent {
     e.data.Notes = '';
   };
 
-  addNewItem = (): void => {
-    void this.dataGrid.cancelEditData();
-    this.dataGrid.addRow();
-    this.changes = this.dataGrid.option('editing.changes');
+  addNewItem = async (): Promise<void> => {
+    await this.dataGrid!.cancelEditData();
+    this.dataGrid!.addRow();
+    this.changes = this.dataGrid!.option('editing.changes');
   };
 
   onValueChanged = (val: ValueChanged): void => {
@@ -49,26 +50,26 @@ export class AppComponent {
     }
   };
 
-  onEditButtonClick = (ID: number): void => {
-    const rowIndex = this.dataGrid.getRowIndexByKey(ID);
-    void this.dataGrid.cancelEditData();
-    this.dataGrid.editRow(rowIndex);
-    this.changes = this.dataGrid.option('editing.changes');
+  onEditButtonClick = async (ID: number): Promise<void> => {
+    const rowIndex = this.dataGrid!.getRowIndexByKey(ID);
+    await this.dataGrid?.cancelEditData();
+    this.dataGrid!.editRow(rowIndex);
+    this.changes = this.dataGrid!.option('editing.changes');
   };
 
   onDeleteButtonClick = (ID: number): void => {
-    const rowIndex = this.dataGrid.getRowIndexByKey(ID);
-    this.dataGrid.deleteRow(rowIndex);
+    const rowIndex = this.dataGrid!.getRowIndexByKey(ID);
+    this.dataGrid!.deleteRow(rowIndex);
   };
 
-  onSaveButtonClick = (): void => {
-    this.dataGrid.option('editing.changes', this.changes);
-    void this.dataGrid.saveEditData();
-    this.dataGrid.refresh();
+  onSaveButtonClick = async (): Promise<void> => {
+    this.dataGrid!.option('editing.changes', this.changes);
+    await this.dataGrid!.saveEditData();
+    this.dataGrid!.refresh();
   };
 
-  onCancelButtonClick = (): void => {
-    void this.dataGrid.cancelEditData();
-    this.dataGrid.refresh();
+  onCancelButtonClick = async (): Promise<void> => {
+    await this.dataGrid!.cancelEditData();
+    this.dataGrid!.refresh();
   };
 }

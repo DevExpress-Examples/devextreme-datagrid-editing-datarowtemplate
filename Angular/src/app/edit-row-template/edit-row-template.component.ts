@@ -2,7 +2,7 @@ import {
   Component,
   Input,
   Output,
-  EventEmitter
+  EventEmitter,
 } from '@angular/core';
 import { DataRowTemplateData } from 'devextreme/ui/data_grid';
 import { ValueChanged } from '../app.service';
