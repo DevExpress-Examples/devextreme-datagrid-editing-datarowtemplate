@@ -8,14 +8,23 @@ import type { ValueChangedEvent as DateValueChanged } from 'devextreme/ui/date_b
 })
 export class Employee {
   ID?: number;
+
   FirstName?: string;
+
   LastName?: string;
+
   Prefix?: string;
+
   Position?: string;
+
   Picture?: string;
+
   BirthDate?: string;
+
   HireDate?: string;
+
   Notes?: string;
+
   Address?: string;
 }
 
@@ -142,7 +151,7 @@ const employees: Employee[] = [
 ];
 
 export class AppService {
-  getEmployees() {
+  getEmployees(): Employee[] {
     return employees;
   }
 }

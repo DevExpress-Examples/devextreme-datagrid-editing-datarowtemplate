@@ -2,7 +2,7 @@ module.exports = {
   root: true,
   extends: ['devextreme/spell-check'],
   overrides: [{
-    files: ['*.ts', '*.html'],
+    files: ['*.ts', '*.html', '**/*.spec.ts'],
     extends: ['devextreme/angular'],
     env: {
       browser: true,

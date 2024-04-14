@@ -8,9 +8,9 @@ describe('DataRowTemplateComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataRowTemplateComponent ]
+      declarations: [DataRowTemplateComponent],
     })
-    .compileComponents();
+      .compileComponents();
 
     fixture = TestBed.createComponent(DataRowTemplateComponent);
     component = fixture.componentInstance;

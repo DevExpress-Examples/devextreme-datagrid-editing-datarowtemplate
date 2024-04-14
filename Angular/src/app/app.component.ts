@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { AppService, Employee, ValueChanged } from './app.service';
 import DataGrid, { InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
+import { AppService, Employee, ValueChanged } from './app.service';
 
 @Component({
   selector: 'app-root',
