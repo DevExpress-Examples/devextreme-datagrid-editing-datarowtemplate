@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { ClickEvent } from 'devextreme/ui/button';
+import { AppService, Employee, ValueChanged } from './app.service';
+import DataGrid, { InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
 
 @Component({
   selector: 'app-root',
@@ -7,14 +8,64 @@ import { ClickEvent } from 'devextreme/ui/button';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'Angular';
+  dataGrid!: DataGrid;
+  employees: Employee[];
+  changes: any;
+  editors: string[];
 
-  counter = 0;
-
-  buttonText = 'Click count: 0';
-
-  onClick(e: ClickEvent): void {
-    this.counter++;
-    this.buttonText = `Click count: ${this.counter}`;
+  constructor(service: AppService) {
+    this.employees = service.getEmployees();
+    this.changes = [];
+    this.editors = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
   }
+  saveGridInstance(e: InitializedEvent) {
+    this.dataGrid = e.component!;
+  }
+
+  onInitNewRow = (e: InitNewRowEvent) => {
+    e.data.Prefix = '';
+    e.data.FirstName = '';
+    e.data.LastName = '';
+    e.data.Position = '';
+    e.data.BirthDate = new Date('1986/07/08');
+    e.data.HireDate = new Date('1986/07/08');
+    e.data.Notes = '';
+  };
+
+  addNewItem = () => {
+    this.dataGrid.cancelEditData();
+    this.dataGrid.addRow();
+    this.changes = this.dataGrid.option('editing.changes');
+  };
+
+  onValueChanged = (val: ValueChanged) => {
+    if (!this.changes.length) {
+      this.changes.push({ data: { [val.dataField]: val.e.value }, key: val.key, type: 'update' });
+    } else {
+      this.changes[0].data = { ...this.changes[0].data, [val.dataField]: val.e.value };
+    }
+  };
+
+  onEditButtonClick = (ID: number) => {
+    const rowIndex = this.dataGrid.getRowIndexByKey(ID);
+    this.dataGrid.cancelEditData();
+    this.dataGrid.editRow(rowIndex);
+    this.changes = this.dataGrid.option('editing.changes');
+  };
+
+  onDeleteButtonClick = (ID: number) => {
+    const rowIndex = this.dataGrid.getRowIndexByKey(ID);
+    this.dataGrid.deleteRow(rowIndex);
+  };
+
+  onSaveButtonClick = () => {
+    this.dataGrid.option('editing.changes', this.changes);
+    this.dataGrid.saveEditData();
+    this.dataGrid.refresh();
+  };
+
+  onCancelButtonClick = () => {
+    this.dataGrid.cancelEditData();
+    this.dataGrid.refresh();
+  };
 }

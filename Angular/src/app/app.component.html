@@ -1,3 +1,47 @@
-<div class="default-style">
-  <dx-button [text]="buttonText" (onClick)="onClick($event)"></dx-button>
+<div class="demo-container">
+  <dx-data-grid
+    [dataSource]="employees"
+    keyExpr="ID"
+    [rowAlternationEnabled]="true"
+    [columnAutoWidth]="true"
+    [showBorders]="true"
+    (onInitialized)="saveGridInstance($event)"
+    (onInitNewRow)="onInitNewRow($event)"
+    dataRowTemplate="dataRowTemplateName"
+  >
+    <dxi-column dataField="Prefix" caption="Title" [width]="70"></dxi-column>
+    <dxi-column dataField="FirstName"></dxi-column>
+    <dxi-column dataField="LastName"></dxi-column>
+    <dxi-column dataField="Position"></dxi-column>
+    <dxi-column dataField="BirthDate" dataType="date"></dxi-column>
+    <dxi-column dataField="HireDate" dataType="date"></dxi-column>
+    <dxi-column [width]="160"></dxi-column>
+    <dxo-toolbar>
+      <dxi-item location="after">
+        <div *dxTemplate>
+          <dx-button text="Add new item" (onClick)="addNewItem()"></dx-button>
+        </div>
+      </dxi-item>
+    </dxo-toolbar>
+
+    <ng-container *dxTemplate="let employee of 'dataRowTemplateName'">
+      <ng-container *ngIf="employee.isEditing">
+        <edit-row-template
+          style="display: contents"
+          [employee]="employee"
+          (onSaveButtonClick)="onSaveButtonClick()"
+          (onCancelButtonClick)="onCancelButtonClick()"
+          (onValueChanged)="onValueChanged($event)"
+        ></edit-row-template>
+      </ng-container>
+      <ng-container *ngIf="!employee.isEditing">
+        <data-row-template
+          style="display: contents"
+          [employee]="employee"
+          (onEditButtonClick)="onEditButtonClick(employee.data.ID)"
+          (onDeleteButtonClick)="onDeleteButtonClick(employee.data.ID)"
+        ></data-row-template>
+      </ng-container>
+    </ng-container>
+  </dx-data-grid>
 </div>

@@ -1,0 +1,30 @@
+<ng-container>
+  <tr class="main-row">
+    <td *ngFor="let editor of editors">
+      <div *ngIf="editor != 'BirthDate' && editor != 'HireDate'; else datebox">
+        <dx-text-box
+          [value]="employee.data[editor]"
+          (onValueChanged)="valueChanged($event, editor, employee.data.ID)"
+        ></dx-text-box>
+      </div>
+      <ng-template #datebox>
+        <dx-date-box
+          [value]="employee.data[editor]"
+          (onValueChanged)="valueChanged($event, editor, employee.data.ID)"
+        ></dx-date-box>
+      </ng-template>
+    </td>
+    <td rowSpan="2">
+      <dx-button text="Save" (onClick)="saveButtonClick()"></dx-button>
+      <dx-button text="Cancel" (onClick)="cancelButtonClick()"> </dx-button>
+    </td>
+  </tr>
+  <tr class="notes-row">
+    <td colspan="6">
+      <dx-text-area
+        [value]="employee.data.Notes"
+        (onValueChanged)="valueChanged($event, 'Notes', employee.data.ID)"
+      ></dx-text-area>
+    </td>
+  </tr>
+</ng-container>
