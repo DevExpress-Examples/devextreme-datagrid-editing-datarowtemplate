@@ -29,7 +29,7 @@ export interface ValueChanged {
   e: TextBoxValueChanged | TextAreaValueChanged | DateValueChanged;
 
   dataField: string;
-  
+
   key: number;
 }
 
