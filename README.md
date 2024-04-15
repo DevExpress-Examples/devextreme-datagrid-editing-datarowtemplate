@@ -22,6 +22,14 @@ This example creates a custom template for rows in edit mode. It also allows use
 
 - **jQuery**
   - [index.js](jQuery/src/index.js)
+- **Vue**
+  - [HomeContent.vue](Vue/src/components/HomeContent.vue)
+  - [DataRowTemplate.vue](Vue/src/components/DataRowTemplate.vue)
+  - [EditRowTemplate.vue](Vue/src/components/EditRowTemplate.vue)
+- **NetCore**
+  - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
+  - [_DataRowTemplate.cshtml](ASP.NET%20Core/Views/Home/_DataRowTemplate.cshtml)
+  - [_EditRowTemplate.cshtml](ASP.NET%20Core/Views/Home/_EditRowTemplate.cshtml)
 
 ## Documentation
 
