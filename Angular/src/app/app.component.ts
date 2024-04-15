@@ -37,9 +37,13 @@ export class AppComponent {
   };
 
   addNewItem = (): void => {
-    void this.dataGrid?.cancelEditData();
-    this.dataGrid?.addRow();
-    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+    Promise.resolve(this.dataGrid?.cancelEditData()).then(
+      () => {
+        this.dataGrid?.addRow();
+        this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+      },
+      () => {},
+    );
   };
 
   onValueChanged = (val: ValueChanged): void => {
@@ -52,9 +56,13 @@ export class AppComponent {
 
   onEditButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    void this.dataGrid?.cancelEditData();
-    if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
-    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+    Promise.resolve(this.dataGrid?.cancelEditData()).then(
+      () => {
+        if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
+        this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+      },
+      () => {},
+    );
   };
 
   onDeleteButtonClick = (ID: number): void => {
@@ -75,7 +83,5 @@ export class AppComponent {
       () => this.dataGrid?.refresh(),
       () => {},
     );
-    // Promise.resolve(this.dataGrid?.cancelEditData()).then();
-    // this.dataGrid?.refresh();
   };
 }
