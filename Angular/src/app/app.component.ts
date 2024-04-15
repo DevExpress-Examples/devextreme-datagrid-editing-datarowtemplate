@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import DataGrid, { InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
+import DataGrid, { DataChange, InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
 import { AppService, Employee, ValueChanged } from './app.service';
 
 @Component({
@@ -12,7 +12,7 @@ export class AppComponent {
 
   employees: Employee[];
 
-  changes: any;
+  changes: DataChange[];
 
   editors: string[];
 
@@ -39,7 +39,7 @@ export class AppComponent {
   addNewItem = (): void => {
     void this.dataGrid?.cancelEditData();
     this.dataGrid?.addRow();
-    this.changes = this.dataGrid?.option('editing.changes');
+    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
   };
 
   onValueChanged = (val: ValueChanged): void => {
@@ -54,7 +54,7 @@ export class AppComponent {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
     void this.dataGrid?.cancelEditData();
     if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
-    this.changes = this.dataGrid?.option('editing.changes');
+    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
   };
 
   onDeleteButtonClick = (ID: number): void => {
@@ -64,13 +64,13 @@ export class AppComponent {
 
   onSaveButtonClick = (): void => {
     this.dataGrid?.option('editing.changes', this.changes);
-    void this.dataGrid?.saveEditData();
+    this.dataGrid?.saveEditData().then().catch();
     // Promise.resolve(this.dataGrid?.saveEditData()).then();
     this.dataGrid?.refresh();
   };
 
-  onCancelButtonClick = (): void => {
-    void this.dataGrid?.cancelEditData();
+  onCancelButtonClick = async (): Promise<void> => {
+    await this.dataGrid?.cancelEditData();
     // Promise.resolve(this.dataGrid?.cancelEditData()).then();
     this.dataGrid?.refresh();
   };

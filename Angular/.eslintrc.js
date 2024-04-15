@@ -14,7 +14,7 @@ module.exports = {
         {
           'ignoreVoid': true
         }
-    ],
+      ],
     },
     parserOptions: {
       project: './tsconfig.json',
