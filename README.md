@@ -22,6 +22,13 @@ This example creates a custom template for rows in edit mode. It also allows use
 
 - **jQuery**
   - [index.js](jQuery/src/index.js)
+- **Angular**
+  - [app.component.html](Angular/src/app/app.component.html)
+  - [app.component.ts](Angular/src/app/app.component.ts)
+  - [data-row-template.component.html](Angular/src/app/data-row-template/data-row-template.component.html)
+  - [data-row-template.component.ts](Angular/src/app/data-row-template/data-row-template.component.ts)
+  - [edit-row-template.component.html](Angular/src/app/edit-row-template/edit-row-template.component.html)
+  - [edit-row-template.component.ts](Angular/src/app/edit-row-template/edit-row-template.component.ts)
 - **Vue**
   - [HomeContent.vue](Vue/src/components/HomeContent.vue)
   - [DataRowTemplate.vue](Vue/src/components/DataRowTemplate.vue)
