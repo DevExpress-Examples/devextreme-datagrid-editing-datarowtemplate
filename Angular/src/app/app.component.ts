@@ -64,13 +64,15 @@ export class AppComponent {
 
   onSaveButtonClick = (): void => {
     this.dataGrid?.option('editing.changes', this.changes);
-    this.dataGrid?.saveEditData().then().catch();
+    // this.dataGrid?.saveEditData().then().catch();
+    this.dataGrid?.saveEditData().then(() => this.dataGrid?.refresh(), ()=>{});
     // Promise.resolve(this.dataGrid?.saveEditData()).then();
     this.dataGrid?.refresh();
   };
 
   onCancelButtonClick = async (): Promise<void> => {
-    await this.dataGrid?.cancelEditData();
+    // await this.dataGrid?.cancelEditData();
+    this.dataGrid?.cancelEditData();
     // Promise.resolve(this.dataGrid?.cancelEditData()).then();
     this.dataGrid?.refresh();
   };
