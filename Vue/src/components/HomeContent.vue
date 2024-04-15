@@ -1,22 +1,124 @@
 <script setup lang="ts">
-import { computed, ref } from "vue";
-
 import "devextreme/dist/css/dx.material.blue.light.compact.css";
-import DxButton from "devextreme-vue/button";
+import DxDataGrid, {
+  DxColumn,
+  DxToolbar,
+  DxItem,
+} from "devextreme-vue/data-grid";
+import type dxDataGrid from "devextreme/ui/data_grid";
+import type {
+  DataChange,
+  InitializedEvent,
+  InitNewRowEvent,
+} from "devextreme/ui/data_grid";
+import type { ValueChangedEvent as TextBoxValueChanged } from "devextreme/ui/text_box";
+import type { ValueChangedEvent as TextAreaValueChanged } from "devextreme/ui/text_area";
+import type { ValueChangedEvent as DateValueChanged } from "devextreme/ui/date_box";
+import { employees } from "../data";
+import { DxButton } from "devextreme-vue";
+import DataRowTemplate from "./DataRowTemplate.vue";
+import EditRowTemplate from "./EditRowTemplate.vue";
 
-const props = defineProps({
-  text: String,
-});
-const count = ref(0);
-const buttonText = computed<String>(
-  () => `Click ${props.text}: ${count.value}`
-);
-function clickHandler() {
-  count.value += 1;
-}
+let dataGrid: dxDataGrid | null | undefined = null;
+let changes: DataChange[];
+
+const saveGridInstance = (e: InitializedEvent) => {
+  dataGrid = e.component;
+};
+
+const onInitNewRow = (e: InitNewRowEvent) => {
+  e.data.Prefix = "";
+  e.data.FirstName = "";
+  e.data.LastName = "";
+  e.data.Position = "";
+  e.data.BirthDate = new Date("1986/07/08");
+  e.data.HireDate = new Date("1986/07/08");
+  e.data.Notes = "";
+};
+
+const addNewItem = () => {
+  dataGrid!.cancelEditData();
+  dataGrid!.addRow();
+  changes = dataGrid!.option("editing.changes") as DataChange[];
+};
+
+const onValueChanged = (
+  e: TextBoxValueChanged | TextAreaValueChanged | DateValueChanged,
+  dataField: string,
+  key: number
+) => {
+  if (!changes.length) {
+    changes.push({ data: { [dataField]: e.value }, key, type: "update" });
+  } else {
+    changes[0].data = { ...changes[0].data, [dataField]: e.value };
+  }
+};
+
+const onEditButtonClick = (ID: number) => {
+  const rowIndex = dataGrid!.getRowIndexByKey(ID);
+  dataGrid!.cancelEditData();
+  dataGrid!.editRow(rowIndex);
+  changes = dataGrid!.option("editing.changes") as DataChange[];
+};
+
+const onDeleteButtonClick = (ID: number) => {
+  const rowIndex = dataGrid!.getRowIndexByKey(ID);
+  dataGrid!.deleteRow(rowIndex);
+};
+
+const onSaveButtonClick = () => {
+  dataGrid!.option("editing.changes", changes);
+  dataGrid!.saveEditData();
+  dataGrid!.refresh();
+};
+
+const onCancelButtonClick = () => {
+  dataGrid!.cancelEditData();
+  dataGrid!.refresh();
+};
 </script>
+
 <template>
-  <div>
-    <DxButton :text="buttonText" @click="clickHandler"></DxButton>
+  <div class="demo-container">
+    <DxDataGrid
+      :data-source="employees"
+      key-expr="ID"
+      :row-alternation-enabled="true"
+      :column-auto-width="true"
+      :show-borders="true"
+      @init-new-row="onInitNewRow"
+      @initialized="saveGridInstance"
+      data-row-template="dataRowTemplate"
+    >
+      <DxColumn data-field="Prefix" caption="Title" :width="70" />
+      <DxColumn data-field="FirstName" />
+      <DxColumn data-field="LastName" />
+      <DxColumn data-field="Position" />
+      <DxColumn data-field="BirthDate" data-type="date" />
+      <DxColumn data-field="HireDate" data-type="date" />
+      <DxColumn :width="160" />
+      <DxToolbar>
+        <DxItem location="after">
+          <DxButton text="Add new item" @click="addNewItem"></DxButton>
+        </DxItem>
+      </DxToolbar>
+      <template #dataRowTemplate="{ data: rowInfo }">
+        <template v-if="rowInfo.isEditing">
+          <EditRowTemplate
+            :rowInfo="rowInfo"
+            @on-value-changed="onValueChanged"
+            @on-save-button-click="onSaveButtonClick"
+            @on-cancel-button-click="onCancelButtonClick"
+          ></EditRowTemplate>
+        </template>
+        <template v-else>
+          <DataRowTemplate
+            :rowInfo="rowInfo"
+            @on-edit-button-click="onEditButtonClick"
+            @on-delete-button-click="onDeleteButtonClick"
+          ></DataRowTemplate>
+        </template>
+      </template>
+    </DxDataGrid>
   </div>
 </template>
