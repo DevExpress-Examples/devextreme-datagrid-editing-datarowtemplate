@@ -5,21 +5,28 @@ import DxDataGrid, {
   DxToolbar,
   DxItem,
 } from "devextreme-vue/data-grid";
-import type { InitializedEvent } from "devextreme/ui/data_grid";
 import type dxDataGrid from "devextreme/ui/data_grid";
+import type {
+  DataChange,
+  InitializedEvent,
+  InitNewRowEvent,
+} from "devextreme/ui/data_grid";
+import type { ValueChangedEvent as TextBoxValueChanged } from "devextreme/ui/text_box";
+import type { ValueChangedEvent as TextAreaValueChanged } from "devextreme/ui/text_area";
+import type { ValueChangedEvent as DateValueChanged } from "devextreme/ui/date_box";
 import { employees } from "../data";
 import { DxButton } from "devextreme-vue";
 import DataRowTemplate from "./DataRowTemplate.vue";
 import EditRowTemplate from "./EditRowTemplate.vue";
 
 let dataGrid: dxDataGrid | null | undefined = null;
-let changes: any;
+let changes: DataChange[];
 
 const saveGridInstance = (e: InitializedEvent) => {
   dataGrid = e.component;
 };
 
-const onInitNewRow = (e: any) => {
+const onInitNewRow = (e: InitNewRowEvent) => {
   e.data.Prefix = "";
   e.data.FirstName = "";
   e.data.LastName = "";
@@ -32,10 +39,14 @@ const onInitNewRow = (e: any) => {
 const addNewItem = () => {
   dataGrid!.cancelEditData();
   dataGrid!.addRow();
-  changes = dataGrid!.option("editing.changes");
+  changes = dataGrid!.option("editing.changes") as DataChange[];
 };
 
-const onValueChanged = (e: any, dataField: string, key: number) => {
+const onValueChanged = (
+  e: TextBoxValueChanged | TextAreaValueChanged | DateValueChanged,
+  dataField: string,
+  key: number
+) => {
   if (!changes.length) {
     changes.push({ data: { [dataField]: e.value }, key, type: "update" });
   } else {
@@ -47,7 +58,7 @@ const onEditButtonClick = (ID: number) => {
   const rowIndex = dataGrid!.getRowIndexByKey(ID);
   dataGrid!.cancelEditData();
   dataGrid!.editRow(rowIndex);
-  changes = dataGrid!.option("editing.changes");
+  changes = dataGrid!.option("editing.changes") as DataChange[];
 };
 
 const onDeleteButtonClick = (ID: number) => {
