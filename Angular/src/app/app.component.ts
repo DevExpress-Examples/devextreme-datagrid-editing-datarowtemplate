@@ -53,24 +53,25 @@ export class AppComponent {
   onEditButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
     this.dataGrid?.cancelEditData();
-    this.dataGrid?.editRow(rowIndex!);
+    if(rowIndex) this.dataGrid?.editRow(rowIndex);
     this.changes = this.dataGrid?.option('editing.changes');
   };
 
   onDeleteButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    this.dataGrid?.deleteRow(rowIndex!);
+    if(rowIndex) this.dataGrid?.deleteRow(rowIndex);
   };
 
-  onSaveButtonClick = async (): Promise<void> => {
+  onSaveButtonClick = (): void => {
     this.dataGrid?.option('editing.changes', this.changes);
-    //await this.dataGrid?.saveEditData();
+    // this.dataGrid?.saveEditData();
     Promise.resolve(this.dataGrid?.saveEditData()).then();
     this.dataGrid?.refresh();
   };
 
   onCancelButtonClick = (): void => {
-    this.dataGrid?.cancelEditData();
+    // this.dataGrid?.cancelEditData();
+    Promise.resolve(this.dataGrid?.cancelEditData()).then();
     this.dataGrid?.refresh();
   };
 }
