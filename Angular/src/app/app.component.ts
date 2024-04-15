@@ -37,13 +37,18 @@ export class AppComponent {
   };
 
   addNewItem = (): void => {
-    Promise.resolve(this.dataGrid?.cancelEditData()).then(
-      () => {
-        this.dataGrid?.addRow();
-        this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
-      },
+    this.dataGrid?.cancelEditData();
+    this.dataGrid?.addRow().then(
+      () => this.changes = this.dataGrid?.option('editing.changes') as DataChange[],
       () => {},
     );
+    // Promise.resolve(this.dataGrid?.cancelEditData()).then(
+    //   () => {
+    //     this.dataGrid?.addRow();
+    //     this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+    //   },
+    //   () => {},
+    // );
   };
 
   onValueChanged = (val: ValueChanged): void => {
