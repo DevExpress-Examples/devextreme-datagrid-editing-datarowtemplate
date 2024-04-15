@@ -3,10 +3,7 @@ import type { ValueChangedEvent as TextBoxValueChanged } from 'devextreme/ui/tex
 import type { ValueChangedEvent as TextAreaValueChanged } from 'devextreme/ui/text_area';
 import type { ValueChangedEvent as DateValueChanged } from 'devextreme/ui/date_box';
 
-@Injectable({
-  providedIn: 'root',
-})
-export class Employee {
+export interface Employee {
   ID?: number;
 
   FirstName?: string;
@@ -30,7 +27,9 @@ export class Employee {
 
 export interface ValueChanged {
   e: TextBoxValueChanged | TextAreaValueChanged | DateValueChanged;
+
   dataField: string;
+  
   key: number;
 }
 
@@ -150,6 +149,7 @@ const employees: Employee[] = [
   },
 ];
 
+@Injectable()
 export class AppService {
   getEmployees(): Employee[] {
     return employees;
