@@ -6,7 +6,7 @@ module.exports = {
     extends: ['devextreme/angular'],
     env: {
       browser: true,
-      es6: true
+      es6: true,
     },
     parserOptions: {
       project: './tsconfig.json',
