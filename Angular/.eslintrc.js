@@ -8,6 +8,14 @@ module.exports = {
       browser: true,
       es6: true,
     },
+    rules: {
+      '@typescript-eslint/no-floating-promises': [
+        'error',
+        {
+          'ignoreVoid': true
+        }
+    ],
+    },
     parserOptions: {
       project: './tsconfig.json',
       'createDefaultProgram': true,

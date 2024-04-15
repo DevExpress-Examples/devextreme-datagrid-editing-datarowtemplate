@@ -37,7 +37,7 @@ export class AppComponent {
   };
 
   addNewItem = (): void => {
-    this.dataGrid?.cancelEditData();
+    void this.dataGrid?.cancelEditData();
     this.dataGrid?.addRow();
     this.changes = this.dataGrid?.option('editing.changes');
   };
@@ -52,26 +52,26 @@ export class AppComponent {
 
   onEditButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    this.dataGrid?.cancelEditData();
-    if(rowIndex) this.dataGrid?.editRow(rowIndex);
+    void this.dataGrid?.cancelEditData();
+    if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
     this.changes = this.dataGrid?.option('editing.changes');
   };
 
   onDeleteButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    if(rowIndex) this.dataGrid?.deleteRow(rowIndex);
+    if (rowIndex != null) this.dataGrid?.deleteRow(rowIndex);
   };
 
   onSaveButtonClick = (): void => {
     this.dataGrid?.option('editing.changes', this.changes);
-    // this.dataGrid?.saveEditData();
-    Promise.resolve(this.dataGrid?.saveEditData()).then();
+    void this.dataGrid?.saveEditData();
+    // Promise.resolve(this.dataGrid?.saveEditData()).then();
     this.dataGrid?.refresh();
   };
 
   onCancelButtonClick = (): void => {
-    // this.dataGrid?.cancelEditData();
-    Promise.resolve(this.dataGrid?.cancelEditData()).then();
+    void this.dataGrid?.cancelEditData();
+    // Promise.resolve(this.dataGrid?.cancelEditData()).then();
     this.dataGrid?.refresh();
   };
 }
