@@ -65,9 +65,9 @@ export class AppComponent {
   onSaveButtonClick = (): void => {
     this.dataGrid?.option('editing.changes', this.changes);
     // this.dataGrid?.saveEditData().then().catch();
-    this.dataGrid?.saveEditData().then(() =>
-      this.dataGrid?.refresh(),
-      () => {}
+    this.dataGrid?.saveEditData().then(
+      () => this.dataGrid?.refresh(),
+      () => {},
     );
     // Promise.resolve(this.dataGrid?.saveEditData()).then();
     // this.dataGrid?.refresh();
