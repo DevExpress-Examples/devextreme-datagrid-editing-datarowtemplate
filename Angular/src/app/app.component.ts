@@ -42,13 +42,6 @@ export class AppComponent {
       () => this.changes = this.dataGrid?.option('editing.changes') as DataChange[],
       () => {},
     );
-    // Promise.resolve(this.dataGrid?.cancelEditData()).then(
-    //   () => {
-    //     this.dataGrid?.addRow();
-    //     this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
-    //   },
-    //   () => {},
-    // );
   };
 
   onValueChanged = (val: ValueChanged): void => {
