@@ -74,6 +74,6 @@ export class AppComponent {
 
   onCancelButtonClick = (): void => {
     this.dataGrid?.cancelEditData();
-    this.dataGrid?.refresh().catch(()=>{});
+    this.dataGrid?.refresh().catch(() => {});
   };
 }
