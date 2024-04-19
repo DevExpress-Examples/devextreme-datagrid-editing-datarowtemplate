@@ -54,13 +54,9 @@ export class AppComponent {
 
   onEditButtonClick = (ID: number): void => {
     const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    Promise.resolve(this.dataGrid?.cancelEditData()).then(
-      () => {
-        if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
-        this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
-      },
-      () => {},
-    );
+    this.dataGrid?.cancelEditData();
+    if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
+    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
   };
 
   onDeleteButtonClick = (ID: number): void => {
@@ -77,9 +73,7 @@ export class AppComponent {
   };
 
   onCancelButtonClick = (): void => {
-    Promise.resolve(this.dataGrid?.cancelEditData()).then(
-      () => this.dataGrid?.refresh(),
-      () => {},
-    );
+    this.dataGrid?.cancelEditData();
+    this.dataGrid?.refresh().catch(()=>{});
   };
 }
