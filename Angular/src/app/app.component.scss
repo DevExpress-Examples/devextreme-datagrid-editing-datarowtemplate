@@ -2,3 +2,45 @@
   margin: 50px;
   width: 95vw;
 }
+
+::ng-deep #grid-container {
+  height: 450px;
+}
+
+::ng-deep #grid-container tr.main-row td:not(:first-child) {
+  height: 21px;
+}
+
+::ng-deep #grid-container tr.notes-row {
+  white-space: normal;
+  vertical-align: top;
+}
+
+::ng-deep #grid-container tr.notes-row td {
+  height: 70px;
+  color: #999;
+}
+
+::ng-deep .dark #grid-container tr.notes-row td {
+  color: #777;
+}
+
+::ng-deep #grid-container tbody.dx-state-hover {
+  background-color: #ebebeb;
+}
+
+::ng-deep .dark #grid-container tbody.dx-state-hover {
+  background-color: #484848;
+}
+
+::ng-deep #grid-container tbody.dx-state-hover tr.main-row td {
+  color: #000;
+}
+
+::ng-deep .dark #grid-container tbody.dx-state-hover tr.main-row td {
+  color: #ccc;
+}
+
+::ng-deep #grid-container tbody.dx-state-hover tr.notes-row td {
+  color: #888;
+}

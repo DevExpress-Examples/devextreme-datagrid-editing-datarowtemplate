@@ -4,13 +4,17 @@
       <div *ngIf="editor != 'BirthDate' && editor != 'HireDate'; else datebox">
         <dx-text-box
           [value]="employee.data[editor]"
-          (onValueChanged)="valueChanged($event, editor, employee.data.ID)"
+          (onValueChanged)="
+            valueChanged({ e: $event, dataField: editor, key: employee.key })
+          "
         ></dx-text-box>
       </div>
       <ng-template #datebox>
         <dx-date-box
           [value]="employee.data[editor]"
-          (onValueChanged)="valueChanged($event, editor, employee.data.ID)"
+          (onValueChanged)="
+            valueChanged({ e: $event, dataField: editor, key: employee.key })
+          "
         ></dx-date-box>
       </ng-template>
     </td>
@@ -23,7 +27,9 @@
     <td colspan="6">
       <dx-text-area
         [value]="employee.data.Notes"
-        (onValueChanged)="valueChanged($event, 'Notes', employee.data.ID)"
+        (onValueChanged)="
+          valueChanged({ e: $event, dataField: 'Notes', key: employee.key })
+        "
       ></dx-text-area>
     </td>
   </tr>

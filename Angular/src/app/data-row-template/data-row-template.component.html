@@ -9,9 +9,14 @@
     <td rowSpan="2">
       <dx-button
         text="Edit"
-        (onClick)="editButtonClick(employee.data.ID)"
+        stylingMode="text"
+        (onClick)="editButtonClick(employee.key)"
       ></dx-button>
-      <dx-button text="Delete" (onClick)="deleteButtonClick(employee.data.ID)">
+      <dx-button
+        stylingMode="text"
+        text="Delete"
+        (onClick)="deleteButtonClick(employee.key)"
+      >
       </dx-button>
     </td>
   </tr>

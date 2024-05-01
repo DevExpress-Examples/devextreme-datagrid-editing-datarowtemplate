@@ -1,11 +1,13 @@
 <div class="demo-container">
   <dx-data-grid
+    id="grid-container"
+    #grid
     [dataSource]="employees"
     keyExpr="ID"
     [rowAlternationEnabled]="true"
+    [hoverStateEnabled]="true"
     [columnAutoWidth]="true"
     [showBorders]="true"
-    (onInitialized)="saveGridInstance($event)"
     (onInitNewRow)="onInitNewRow($event)"
     dataRowTemplate="dataRowTemplateName"
   >
@@ -19,16 +21,21 @@
     <dxo-toolbar>
       <dxi-item location="after">
         <div *dxTemplate>
-          <dx-button text="Add new item" (onClick)="addNewItem()"></dx-button>
+          <dx-button
+            stylingMode="text"
+            text="Add new item"
+            (onClick)="addNewItem()"
+          ></dx-button>
         </div>
       </dxi-item>
     </dxo-toolbar>
-
+    <dxo-editing [(changes)]="changes"></dxo-editing>
     <ng-container *dxTemplate="let employee of 'dataRowTemplateName'">
       <ng-container *ngIf="employee.isEditing">
         <edit-row-template
           style="display: contents"
           [employee]="employee"
+          [editors]="editors"
           (onSaveButtonClick)="onSaveButtonClick()"
           (onCancelButtonClick)="onCancelButtonClick()"
           (onValueChanged)="onValueChanged($event)"
@@ -38,8 +45,8 @@
         <data-row-template
           style="display: contents"
           [employee]="employee"
-          (onEditButtonClick)="onEditButtonClick(employee.data.ID)"
-          (onDeleteButtonClick)="onDeleteButtonClick(employee.data.ID)"
+          (onEditButtonClick)="onEditButtonClick(employee.key)"
+          (onDeleteButtonClick)="onDeleteButtonClick(employee.key)"
         ></data-row-template>
       </ng-container>
     </ng-container>

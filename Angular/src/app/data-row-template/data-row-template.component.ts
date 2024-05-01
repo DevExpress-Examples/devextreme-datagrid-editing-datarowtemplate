@@ -3,7 +3,7 @@ import {
   Input, Output,
   EventEmitter,
 } from '@angular/core';
-import { DataRowTemplateData } from 'devextreme/ui/data_grid';
+import { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
 
 @Component({
   selector: 'data-row-template',
@@ -11,7 +11,7 @@ import { DataRowTemplateData } from 'devextreme/ui/data_grid';
   styleUrls: ['./data-row-template.component.scss'],
 })
 export class DataRowTemplateComponent {
-  @Input() employee!: DataRowTemplateData;
+  @Input() employee!: DxDataGridTypes.DataRowTemplateData;
 
   @Output() onEditButtonClick = new EventEmitter<number>();
 

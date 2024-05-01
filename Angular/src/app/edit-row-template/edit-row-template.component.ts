@@ -4,7 +4,8 @@ import {
   Output,
   EventEmitter,
 } from '@angular/core';
-import { DataRowTemplateData } from 'devextreme/ui/data_grid';
+
+import { DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
 import { ValueChanged } from '../app.service';
 
 @Component({
@@ -13,7 +14,7 @@ import { ValueChanged } from '../app.service';
   styleUrls: ['./edit-row-template.component.scss'],
 })
 export class EditRowTemplateComponent {
-  @Input() employee!: DataRowTemplateData;
+  @Input() employee!: DxDataGridTypes.DataRowTemplateData;
 
   @Output() onSaveButtonClick = new EventEmitter<number>();
 
@@ -21,7 +22,7 @@ export class EditRowTemplateComponent {
 
   @Output() onValueChanged = new EventEmitter<ValueChanged>();
 
-  editors: string[] = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
+  @Input() editors!: string[];
 
   saveButtonClick(): void {
     this.onSaveButtonClick.emit();
@@ -31,7 +32,7 @@ export class EditRowTemplateComponent {
     this.onCancelButtonClick.emit();
   }
 
-  valueChanged(e: any, dataField: string, key: number): void {
+  valueChanged({ e, dataField, key }: ValueChanged): void {
     this.onValueChanged.emit({ e, dataField, key });
   }
 }

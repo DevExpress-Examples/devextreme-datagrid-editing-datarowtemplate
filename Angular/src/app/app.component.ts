@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
-import DataGrid, { DataChange, InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
+import { Component, ViewChild } from '@angular/core';
+import dxDataGrid from 'devextreme/ui/data_grid';
+import { DxDataGridComponent, DxDataGridTypes } from 'devextreme-angular/ui/data-grid';
+import notify from 'devextreme/ui/notify';
 import { AppService, Employee, ValueChanged } from './app.service';
 
 @Component({
@@ -8,11 +10,11 @@ import { AppService, Employee, ValueChanged } from './app.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  dataGrid?: DataGrid | undefined;
+  @ViewChild('grid', { static: false }) dataGrid?: DxDataGridComponent<Employee, number>;
 
   employees: Employee[];
 
-  changes: DataChange[];
+  changes: DxDataGridTypes.DataChange<Employee, number>[];
 
   editors: string[];
 
@@ -22,11 +24,9 @@ export class AppComponent {
     this.editors = ['Prefix', 'FirstName', 'LastName', 'Position', 'BirthDate', 'HireDate'];
   }
 
-  saveGridInstance(e: InitializedEvent): void {
-    this.dataGrid = e.component;
-  }
+  get dataGridInstance(): dxDataGrid<Employee, number> | undefined { return this.dataGrid?.instance; }
 
-  onInitNewRow = (e: InitNewRowEvent): void => {
+  onInitNewRow = (e: DxDataGridTypes.InitNewRowEvent<Employee, number>): void => {
     e.data.Prefix = '';
     e.data.FirstName = '';
     e.data.LastName = '';
@@ -34,14 +34,14 @@ export class AppComponent {
     e.data.BirthDate = new Date('1986/07/08');
     e.data.HireDate = new Date('1986/07/08');
     e.data.Notes = '';
+    e.data.ID = Math.max(this.employees.length, this.employees[this.employees.length - 1].ID + 1);
   };
 
   addNewItem = (): void => {
-    this.dataGrid?.cancelEditData();
-    this.dataGrid?.addRow().then(
-      () => this.changes = this.dataGrid?.option('editing.changes') as DataChange[],
-      () => {},
-    );
+    if (this.dataGridInstance) {
+      this.dataGridInstance.cancelEditData();
+      this.dataGridInstance.addRow().catch(() => { notify('A new row cannot be added', 'error'); });
+    }
   };
 
   onValueChanged = (val: ValueChanged): void => {
@@ -53,27 +53,32 @@ export class AppComponent {
   };
 
   onEditButtonClick = (ID: number): void => {
-    const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    this.dataGrid?.cancelEditData();
-    if (rowIndex != null) this.dataGrid?.editRow(rowIndex);
-    this.changes = this.dataGrid?.option('editing.changes') as DataChange[];
+    if (!this.dataGridInstance) return;
+    const rowIndex = this.dataGridInstance.getRowIndexByKey(ID);
+    this.dataGridInstance.cancelEditData();
+    if (rowIndex != null) this.dataGridInstance.editRow(rowIndex);
   };
 
   onDeleteButtonClick = (ID: number): void => {
-    const rowIndex = this.dataGrid?.getRowIndexByKey(ID);
-    if (rowIndex != null) this.dataGrid?.deleteRow(rowIndex);
+    if (!this.dataGridInstance) return;
+    const rowIndex = this.dataGridInstance.getRowIndexByKey(ID);
+    if (rowIndex != null) this.dataGridInstance.deleteRow(rowIndex);
+    else notify('A row cannot be deleted', 'error');
   };
 
   onSaveButtonClick = (): void => {
-    this.dataGrid?.option('editing.changes', this.changes);
-    this.dataGrid?.saveEditData().then(
-      () => this.dataGrid?.refresh(),
-      () => {},
-    );
+    if (this.dataGridInstance) {
+      this.dataGridInstance.saveEditData().then(
+        () => this.dataGridInstance?.refresh(),
+        () => { notify('Save operation failed', 'error'); },
+      );
+    }
   };
 
   onCancelButtonClick = (): void => {
-    this.dataGrid?.cancelEditData();
-    this.dataGrid?.refresh().catch(() => {});
+    if (this.dataGridInstance) {
+      this.dataGridInstance.cancelEditData();
+      this.dataGridInstance.refresh().catch(() => { notify('Cancel operation failed', 'error'); });
+    }
   };
 }
