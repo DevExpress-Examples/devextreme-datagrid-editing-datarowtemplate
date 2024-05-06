@@ -1,4 +1,50 @@
 .main {
   margin: 50px;
-  width: 90vh;
+  width: 90vw;
+}
+
+#grid-container {
+  height: 450px;
+}
+
+.dx-row img {
+  height: 100px;
+}
+
+#grid-container tr.main-row td:not(:first-child) {
+  height: 21px;
+}
+
+#grid-container tr.notes-row {
+  white-space: normal;
+  vertical-align: top;
+}
+
+#grid-container tr.notes-row td {
+  height: 70px;
+  color: #999;
+}
+
+.dark #grid-container tr.notes-row td {
+  color: #777;
+}
+
+#grid-container tbody.dx-state-hover {
+  background-color: #ebebeb;
+}
+
+.dark #grid-container tbody.dx-state-hover {
+  background-color: #484848;
+}
+
+#grid-container tbody.dx-state-hover tr.main-row td {
+  color: #000;
+}
+
+.dark #grid-container tbody.dx-state-hover tr.main-row td {
+  color: #ccc;
+}
+
+#grid-container tbody.dx-state-hover tr.notes-row td {
+  color: #888;
 }

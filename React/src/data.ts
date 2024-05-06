@@ -5,8 +5,8 @@ export interface Employee {
   Prefix: string;
   Position: string;
   Picture: string;
-  BirthDate: string;
-  HireDate: string;
+  BirthDate: Date | string;
+  HireDate: Date | string;
   Notes: string;
   Address: string;
 }

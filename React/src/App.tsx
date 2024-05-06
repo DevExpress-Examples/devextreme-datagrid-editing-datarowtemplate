@@ -3,17 +3,17 @@ import './App.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import Button from 'devextreme-react/button';
 import DataGrid, { Column, Toolbar, Item } from 'devextreme-react/data-grid';
-import { InitNewRowEvent } from 'devextreme/ui/data_grid';
-import { employees } from './data';
+import type { DataGridTypes } from 'devextreme-react/data-grid';
+import { Employee, employees } from './data';
 import DataRow from './DataRow';
 
 // const formatDate = new Intl.DateTimeFormat('en-US').format;
 
 function App(): JSX.Element {
   const dataGrid = useRef<any>(null);
-  const [changes, setChanges] = useState([]);
+  const [, setChanges] = useState([]);
 
-  const onInitNewRow = useCallback((e: InitNewRowEvent): void => {
+  const onInitNewRow = useCallback((e: DataGridTypes.InitNewRowEvent<Employee, number>): void => {
     e.data.Prefix = '';
     e.data.FirstName = '';
     e.data.LastName = '';
@@ -23,22 +23,21 @@ function App(): JSX.Element {
     e.data.Notes = '';
   }, []);
 
-  const addNewItme = useCallback(() => {
-    setTimeout(() => {
-      const grid = dataGrid.current.instance;
-      grid.cancelEditData();
-      // grid.addRow();
-      setChanges(grid.option('editing.changes'));
-    });
-  }, []);
+  const addNewItem = useCallback(() => {
+    const grid = dataGrid.current.instance;
+    grid.cancelEditData();
+    setChanges({} as any);
+  }, [setChanges, dataGrid]);
 
   return (
     <div className='main'>
       <DataGrid
+        id="grid-container"
         ref={dataGrid}
         dataSource={employees}
         keyExpr='ID'
         rowAlternationEnabled={true}
+        hoverStateEnabled={true}
         columnAutoWidth={true}
         showBorders={true}
         onInitNewRow={onInitNewRow}
@@ -53,7 +52,7 @@ function App(): JSX.Element {
         <Column width={160} />
         <Toolbar>
           <Item location='after'>
-            <Button text='Add new item' onClick={addNewItme} />
+            <Button text='Add new item' onClick={addNewItem} />
           </Item>
         </Toolbar>
       </DataGrid>
