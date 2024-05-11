@@ -1,0 +1,66 @@
+import * as React from 'react';
+import applyChanges from 'devextreme/data/apply_changes';
+import { DataGridTypes } from 'devextreme-react/data-grid';
+import { Employee, employees } from './data';
+
+interface EditingProviderProps { children: React.ReactNode }
+interface Action { type: string; payload?: DataGridTypes.DataChange[] | Employee[] }
+interface State {
+  changes: DataGridTypes.DataChange[];
+  data: Employee[];
+}
+// eslint-disable-next-line no-unused-vars
+type ContextProps = { state: State; dispatch: (type: Action) => void } | undefined;
+
+export const SAVING_SUCCESS = 'SAVING_SUCCESS';
+export const SAVING_CANCEL = 'SAVING_CANCEL';
+export const SET_CHANGES = 'SET_CHANGES';
+
+const EditingContext = React.createContext<ContextProps>(undefined);
+
+function editingReducer(state: State, action: Action): State {
+  let newData = [];
+  const { type, payload } = action;
+  switch (type) {
+    case SAVING_SUCCESS:
+      newData = applyChanges(state.data, payload ?? [], { keyExpr: 'ID' });
+      return {
+        ...state,
+        data: newData,
+        changes: [],
+      };
+    case SAVING_CANCEL:
+      return {
+        ...state,
+        changes: [],
+      };
+    case SET_CHANGES:
+      return {
+        ...state,
+        changes: payload as DataGridTypes.DataChange[],
+      };
+    default:
+      return state;
+  }
+}
+
+function EditingProvider({ children }: EditingProviderProps): JSX.Element {
+  const [state, dispatch] = React.useReducer(editingReducer, { data: employees, changes: [] });
+  // NOTE: you *might* need to memoize this value
+  // Learn more in http://kcd.im/optimize-context
+  const value = React.useMemo(() => ({ state, dispatch }), [state]);
+
+  return (<EditingContext.Provider value={value}>
+    {children}
+  </EditingContext.Provider>);
+}
+
+function useEditing(): ContextProps {
+  const context = React.useContext(EditingContext);
+  if (context === undefined) {
+    throw new Error('useEditing must be used within EditingProvider');
+  }
+  return context;
+}
+
+export { EditingProvider, useEditing };
