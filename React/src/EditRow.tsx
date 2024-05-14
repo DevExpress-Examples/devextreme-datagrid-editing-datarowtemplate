@@ -6,12 +6,12 @@ import { type DateBoxTypes, DateBox } from 'devextreme-react/date-box';
 import { type TextAreaTypes, TextArea } from 'devextreme-react/text-area';
 import { type TextBoxTypes, TextBox } from 'devextreme-react/text-box';
 
-import { type Employee } from './data';
+import type { Employee } from './data';
 
 import { SAVING_CANCEL, SAVING_SUCCESS, useEditing } from './editing-context';
-import { RowTemplateData, convertToString } from './utils';
+import { ColumnNames, RowTemplateData } from './utils';
 
-const columns: string[] = [
+const columns: ColumnNames[] = [
   'Prefix',
   'FirstName',
   'LastName',
@@ -49,7 +49,7 @@ function EditRow(rowInfo: RowTemplateData<Employee, number>): JSX.Element {
               {
                 dataField === 'BirthDate' || dataField === 'HireDate'
                   ? <DateBox defaultValue={rowInfo.data[dataField]} onValueChanged={valueChangeAction(dataField, rowInfo.data.ID)} />
-                  : <TextBox defaultValue={convertToString(rowInfo.data[dataField])} onValueChanged={valueChangeAction(dataField, rowInfo.data.ID)} />
+                  : <TextBox defaultValue={rowInfo.data[dataField]} onValueChanged={valueChangeAction(dataField, rowInfo.data.ID)} />
               }
             </td>
           ))

@@ -1,5 +1,4 @@
 export interface Employee {
-  [propName: string]: string | number | Date | undefined;
   ID: number;
   FirstName: string;
   LastName: string;
