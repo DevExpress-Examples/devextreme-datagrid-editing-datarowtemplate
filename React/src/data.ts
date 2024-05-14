@@ -1,4 +1,5 @@
 export interface Employee {
+  [propName: string]: string | number | Date | undefined;
   ID: number;
   FirstName: string;
   LastName: string;
@@ -9,11 +10,6 @@ export interface Employee {
   HireDate: Date | string;
   Notes: string;
   Address: string;
-}
-
-export interface Editor {
-  editorID: string;
-  dataField: string;
 }
 
 export const employees: Employee[] = [
@@ -133,32 +129,5 @@ export const employees: Employee[] = [
     Notes:
       'As our ombudsman, Kent is on the front-lines solving customer problems and helping our partners address issues out in the field.    He is a classically trained musician and is a member of the Chamber Orchestra.',
     Address: '12100 Mora Dr',
-  },
-];
-
-export const editors: Editor[] = [
-  {
-    editorID: '#prefixEditor',
-    dataField: 'Prefix',
-  },
-  {
-    editorID: '#firstNameEditor',
-    dataField: 'FirstName',
-  },
-  {
-    editorID: '#lastNameEditor',
-    dataField: 'LastName',
-  },
-  {
-    editorID: '#positionEditor',
-    dataField: 'Position',
-  },
-  {
-    editorID: '#birthDateEditor',
-    dataField: 'BirthDate',
-  },
-  {
-    editorID: '#hireDateEditor',
-    dataField: 'HireDate',
   },
 ];

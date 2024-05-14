@@ -34,12 +34,10 @@ function DisplayRow(rowInfo: DataGridTypes.RowTemplateData<Employee, number>): J
         <td rowSpan={2}>
           <Button
             text="Edit"
-            width={90}
             onClick={onEditButtonClick}
           ></Button>
           <Button
             text="Delete"
-            width={90}
             onClick={onDeleteButtonClick}
           ></Button>
         </td>
