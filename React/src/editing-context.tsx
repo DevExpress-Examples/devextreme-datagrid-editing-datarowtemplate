@@ -55,10 +55,7 @@ function editingReducer(state: State, action: Action): State {
 
 function EditingProvider({ children }: EditingProviderProps): JSX.Element {
   const [state, dispatch] = React.useReducer(editingReducer, { data: employees, changes: [], editRowKey: undefined });
-  // NOTE: you *might* need to memoize this value
-  // Learn more in http://kcd.im/optimize-context
-  // eslint-disable-next-line
-  const value = React.useMemo(()=>({ state, dispatch }), [state]);
+  const value = React.useMemo(() => ({ state, dispatch }), [state]);
 
   return (<EditingContext.Provider value={value}>
     {children}
