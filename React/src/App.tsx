@@ -1,16 +1,16 @@
-import React, { useCallback, useState } from 'react';
-import './App.css';
 import 'devextreme/dist/css/dx.material.blue.light.compact.css';
-import Button from 'devextreme-react/button';
+import './App.css';
+
+import React from 'react';
+import { EditingProvider } from './editing-context';
+import GridComponent from './Grid';
 
 function App(): JSX.Element {
-  var [count, setCount] = useState<number>(0);
-  const clickHandler = useCallback(() => {
-    setCount((prev) => prev + 1);
-  }, [setCount]);
   return (
-    <div className="main">
-      <Button text={`Click count: ${count}`} onClick={clickHandler} />
+    <div className='main'>
+      <EditingProvider>
+        <GridComponent />
+      </EditingProvider>
     </div>
   );
 }
