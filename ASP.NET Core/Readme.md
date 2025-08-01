@@ -22,26 +22,6 @@ The resulted bundles will be located in the `wwwroot` folder:
 
 The default bundle includes jQuery, Bootstrap, and DevExtreme.
 
-### Add more 3rd-party libraries for additional features/components 
-
-The main logic is located in the the `gulpfile.js` file at the root application level. The file contains two tasks:
-
-* the `add-resources` task  
-
-    * copies JavaScript files located in the `scripts` array and adds them to `vendor.js`. The script bundle is moved to `wwwroot\js`.
-    * copies CSS styles located in the `styles` array and merges them into the `vendor.css` bundle. Then, this bundle is moved to `wwwroot\css`
-    * copies DevExtreme `fonts` and `icons` folders from NPM  to `wwwroot\css`
-
-*  the `clean` task removes all previously created files (`vendor.js` and `vendor.css`) and folders (`icons` and `fonts`)
-
-If you need to include more features, you can uncomment one of the following sections:
-
-* Gantt - scripts and styles for [dxGantt](https://js.devexpress.com/DevExtreme/Guide/UI_Components/Gantt/Getting_Started_with_Gantt/).
-* Diagram - scripts and styles for [dxDiagram](https://js.devexpress.com/DevExtreme/Guide/UI_Components/Diagram/Getting_Started_with_Diagram/).
-* Export  - scripts and styles for the exporting feature: [Export Data to Excel](https://js.devexpress.com/DevExtreme/Guide/UI_Components/DataGrid/Getting_Started_with_DataGrid/#Export_Data). 
-* HtmlEditor - scripts and styles for [dxHtmlEditor](https://js.devexpress.com/DevExtreme/Guide/UI_Components/HtmlEditor/Overview/).
-* Full Bundle - scripts and styles for all above mentioned features/components.  
-
 ## Code
 
 Take a look at the following files of this example to see the required code:
