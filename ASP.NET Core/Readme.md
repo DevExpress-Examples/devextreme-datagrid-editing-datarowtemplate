@@ -55,9 +55,9 @@ Use the Visual Studio `Run (F5)` command or `dotnet run` command to run the proj
 
 You can learn more about the ASP.NET Core components' syntax in our documentation: [Concepts](https://docs.devexpress.com/AspNetCore/400574/devextreme-based-controls/concepts/razor-syntax)
 The client-side API is based on jQuery [jQuery documentation](https://api.jquery.com/) and described in the following topics: 
-* [Get and Set Properties](https://js.devexpress.com/DevExtreme/Guide/jQuery_Components/Component_Configuration_Syntax/#Get_and_Set_Properties)
-* [Call Methods](https://js.devexpress.com/DevExtreme/Guide/jQuery_Components/Component_Configuration_Syntax/#Call_Methods)
-* [Get a UI Component Instance](https://js.devexpress.com/DevExtreme/Guide/jQuery_Components/Component_Configuration_Syntax/#Get_a_UI_Component_Instance)
+* [Get and Set Properties](https://js.devexpress.com/jQuery/Documentation/Guide/jQuery_Components/Component_Configuration_Syntax/#Get_and_Set_Properties)
+* [Call Methods](https://js.devexpress.com/jQuery/Documentation/Guide/jQuery_Components/Component_Configuration_Syntax/#Call_Methods)
+* [Get a UI Component Instance](https://js.devexpress.com/jQuery/Documentation/Guide/jQuery_Components/Component_Configuration_Syntax/#Get_a_UI_Component_Instance)
 
 To get more help on DevExtreme submit an issue in the [Support Center](https://supportcenter.devexpress.com/ticket/create)
 
