@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { DxButton } from "devextreme-vue";
-import type { DataRowTemplateData } from "devextreme/ui/data_grid";
+import { DxButton } from 'devextreme-vue';
+import type { DataRowTemplateData } from 'devextreme/ui/data_grid';
 withDefaults(defineProps<{ rowInfo: DataRowTemplateData }>(), {
   rowInfo: undefined,
 });
-defineEmits(["onEditButtonClick", "onDeleteButtonClick"]);
-const formatDate = new Intl.DateTimeFormat("en-US").format;
+defineEmits(['onEditButtonClick', 'onDeleteButtonClick']);
+const formatDate = new Intl.DateTimeFormat('en-US').format;
 </script>
 
 <template>
@@ -21,11 +21,11 @@ const formatDate = new Intl.DateTimeFormat("en-US").format;
         <DxButton
           text="Edit"
           @click="$emit('onEditButtonClick', rowInfo!.data.ID)"
-        ></DxButton>
+        />
         <DxButton
           text="Delete"
           @click="$emit('onDeleteButtonClick', rowInfo!.data.ID)"
-        ></DxButton>
+        />
       </td>
     </tr>
     <tr class="notes-row">

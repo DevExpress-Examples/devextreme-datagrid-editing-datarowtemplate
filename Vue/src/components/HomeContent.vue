@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import "devextreme/dist/css/dx.material.blue.light.compact.css";
+import 'devextreme/dist/css/dx.material.blue.light.compact.css';
 import DxDataGrid, {
   DxColumn,
   DxToolbar,
   DxItem,
-} from "devextreme-vue/data-grid";
-import type dxDataGrid from "devextreme/ui/data_grid";
+} from 'devextreme-vue/data-grid';
+import type dxDataGrid from 'devextreme/ui/data_grid';
 import type {
   DataChange,
   InitializedEvent,
   InitNewRowEvent,
-} from "devextreme/ui/data_grid";
-import type { ValueChangedEvent as TextBoxValueChanged } from "devextreme/ui/text_box";
-import type { ValueChangedEvent as TextAreaValueChanged } from "devextreme/ui/text_area";
-import type { ValueChangedEvent as DateValueChanged } from "devextreme/ui/date_box";
-import { employees } from "../data";
-import { DxButton } from "devextreme-vue";
-import DataRowTemplate from "./DataRowTemplate.vue";
-import EditRowTemplate from "./EditRowTemplate.vue";
+} from 'devextreme/ui/data_grid';
+import type { ValueChangedEvent as TextBoxValueChanged } from 'devextreme/ui/text_box';
+import type { ValueChangedEvent as TextAreaValueChanged } from 'devextreme/ui/text_area';
+import type { ValueChangedEvent as DateValueChanged } from 'devextreme/ui/date_box';
+import { employees } from '../data';
+import { DxButton } from 'devextreme-vue';
+import DataRowTemplate from './DataRowTemplate.vue';
+import EditRowTemplate from './EditRowTemplate.vue';
 
 let dataGrid: dxDataGrid | null | undefined = null;
 let changes: DataChange[];
@@ -27,19 +27,19 @@ const saveGridInstance = (e: InitializedEvent) => {
 };
 
 const onInitNewRow = (e: InitNewRowEvent) => {
-  e.data.Prefix = "";
-  e.data.FirstName = "";
-  e.data.LastName = "";
-  e.data.Position = "";
-  e.data.BirthDate = new Date("1986/07/08");
-  e.data.HireDate = new Date("1986/07/08");
-  e.data.Notes = "";
+  e.data.Prefix = '';
+  e.data.FirstName = '';
+  e.data.LastName = '';
+  e.data.Position = '';
+  e.data.BirthDate = new Date('1986/07/08');
+  e.data.HireDate = new Date('1986/07/08');
+  e.data.Notes = '';
 };
 
 const addNewItem = () => {
   dataGrid!.cancelEditData();
   dataGrid!.addRow();
-  changes = dataGrid!.option("editing.changes") as DataChange[];
+  changes = dataGrid!.option('editing.changes') as DataChange[];
 };
 
 const onValueChanged = (
@@ -48,7 +48,7 @@ const onValueChanged = (
   key: number
 ) => {
   if (!changes.length) {
-    changes.push({ data: { [dataField]: e.value }, key, type: "update" });
+    changes.push({ data: { [dataField]: e.value }, key, type: 'update' });
   } else {
     changes[0].data = { ...changes[0].data, [dataField]: e.value };
   }
@@ -58,7 +58,7 @@ const onEditButtonClick = (ID: number) => {
   const rowIndex = dataGrid!.getRowIndexByKey(ID);
   dataGrid!.cancelEditData();
   dataGrid!.editRow(rowIndex);
-  changes = dataGrid!.option("editing.changes") as DataChange[];
+  changes = dataGrid!.option('editing.changes') as DataChange[];
 };
 
 const onDeleteButtonClick = (ID: number) => {
@@ -67,7 +67,7 @@ const onDeleteButtonClick = (ID: number) => {
 };
 
 const onSaveButtonClick = () => {
-  dataGrid!.option("editing.changes", changes);
+  dataGrid!.option('editing.changes', changes);
   dataGrid!.saveEditData();
   dataGrid!.refresh();
 };
@@ -90,33 +90,47 @@ const onCancelButtonClick = () => {
       @initialized="saveGridInstance"
       data-row-template="dataRowTemplate"
     >
-      <DxColumn data-field="Prefix" caption="Title" :width="70" />
-      <DxColumn data-field="FirstName" />
-      <DxColumn data-field="LastName" />
-      <DxColumn data-field="Position" />
-      <DxColumn data-field="BirthDate" data-type="date" />
-      <DxColumn data-field="HireDate" data-type="date" />
-      <DxColumn :width="160" />
+      <DxColumn
+        data-field="Prefix"
+        caption="Title"
+        :width="70"
+      />
+      <DxColumn data-field="FirstName"/>
+      <DxColumn data-field="LastName"/>
+      <DxColumn data-field="Position"/>
+      <DxColumn
+        data-field="BirthDate"
+        data-type="date"
+      />
+      <DxColumn
+        data-field="HireDate"
+        data-type="date"
+      />
+      <DxColumn :width="160"/>
       <DxToolbar>
         <DxItem location="after">
-          <DxButton text="Add new item" @click="addNewItem"></DxButton>
+          <DxButton
+            text="Add new item"
+            stylingMode="text"
+            @click="addNewItem"
+          />
         </DxItem>
       </DxToolbar>
       <template #dataRowTemplate="{ data: rowInfo }">
         <template v-if="rowInfo.isEditing">
           <EditRowTemplate
-            :rowInfo="rowInfo"
+            :row-info="rowInfo"
             @on-value-changed="onValueChanged"
             @on-save-button-click="onSaveButtonClick"
             @on-cancel-button-click="onCancelButtonClick"
-          ></EditRowTemplate>
+          />
         </template>
         <template v-else>
           <DataRowTemplate
-            :rowInfo="rowInfo"
+            :row-info="rowInfo"
             @on-edit-button-click="onEditButtonClick"
             @on-delete-button-click="onDeleteButtonClick"
-          ></DataRowTemplate>
+          />
         </template>
       </template>
     </DxDataGrid>

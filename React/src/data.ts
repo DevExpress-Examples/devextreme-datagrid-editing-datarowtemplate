@@ -1,15 +1,15 @@
-export type Employee = {
+export interface Employee {
   ID: number;
   FirstName: string;
   LastName: string;
   Prefix: string;
   Position: string;
   Picture: string;
-  BirthDate: string;
-  HireDate: string;
+  BirthDate: Date | string;
+  HireDate: Date | string;
   Notes: string;
   Address: string;
-};
+}
 
 export const employees: Employee[] = [
   {
