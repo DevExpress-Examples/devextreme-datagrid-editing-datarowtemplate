@@ -34,6 +34,11 @@ This example creates a custom template for rows in edit mode. It also allows use
   - [HomeContent.vue](Vue/src/components/HomeContent.vue)
   - [DataRowTemplate.vue](Vue/src/components/DataRowTemplate.vue)
   - [EditRowTemplate.vue](Vue/src/components/EditRowTemplate.vue)
+- **React**
+  - [Grid.tsx](React/src/Grid.tsx)
+  - [DataRow.tsx](React/src/DataRow.tsx)
+  - [DisplayRow.tsx](React/src/DisplayRow.tsx)
+  - [EditRow.tsx](React/src/EditRow.tsx)
 - **NetCore**
   - [Index.cshtml](ASP.NET%20Core/Views/Home/Index.cshtml)
   - [_DataRowTemplate.cshtml](ASP.NET%20Core/Views/Home/_DataRowTemplate.cshtml)
