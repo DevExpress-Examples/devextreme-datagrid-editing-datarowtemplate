@@ -111,7 +111,7 @@ const onCancelButtonClick = () => {
         <DxItem location="after">
           <DxButton
             text="Add new item"
-            stylingMode="text"
+            styling-mode="text"
             @click="addNewItem"
           />
         </DxItem>
