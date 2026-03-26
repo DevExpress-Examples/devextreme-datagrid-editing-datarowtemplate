@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { DxButton } from 'devextreme-vue';
 import type { DataRowTemplateData } from 'devextreme/ui/data_grid';
-withDefaults(defineProps<{ rowInfo: DataRowTemplateData }>(), {
+withDefaults(defineProps<{ rowInfo?: DataRowTemplateData }>(), {
   rowInfo: undefined,
 });
 defineEmits(['onEditButtonClick', 'onDeleteButtonClick']);
