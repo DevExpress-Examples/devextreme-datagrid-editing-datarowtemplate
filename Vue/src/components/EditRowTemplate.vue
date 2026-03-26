@@ -16,49 +16,47 @@ const editors: string[] = [
 </script>
 
 <template>
-  <div style="display: contents">
-    <tr class="main-row">
-      <td
-        v-for="editor in editors"
-        :key="editor"
-      >
-        <div v-if="editor != 'BirthDate' && editor != 'HireDate'">
-          <DxTextBox
-            :value="rowInfo!.data[editor]"
-            @value-changed="
-              $emit('onValueChanged', $event, editor, rowInfo!.data.ID)
-            "
-          />
-        </div>
-        <div v-else>
-          <DxDateBox
-            :value="rowInfo!.data[editor]"
-            @value-changed="
-              $emit('onValueChanged', $event, editor, rowInfo!.data.ID)
-            "
-          />
-        </div>
-      </td>
-      <td rowSpan="2">
-        <DxButton
-          text="Save"
-          @click="$emit('onSaveButtonClick')"
-        />
-        <DxButton
-          text="Cancel"
-          @click="$emit('onCancelButtonClick')"
-        />
-      </td>
-    </tr>
-    <tr class="notes-row">
-      <td colspan="6">
-        <DxTextArea
-          :value="rowInfo!.data.Notes"
+  <tr class="main-row">
+    <td
+      v-for="editor in editors"
+      :key="editor"
+    >
+      <div v-if="editor != 'BirthDate' && editor != 'HireDate'">
+        <DxTextBox
+          :value="rowInfo!.data[editor]"
           @value-changed="
-            $emit('onValueChanged', $event, 'Notes', rowInfo!.data.ID)
+            $emit('onValueChanged', $event, editor, rowInfo!.data.ID)
           "
         />
-      </td>
-    </tr>
-  </div>
+      </div>
+      <div v-else>
+        <DxDateBox
+          :value="rowInfo!.data[editor]"
+          @value-changed="
+            $emit('onValueChanged', $event, editor, rowInfo!.data.ID)
+          "
+        />
+      </div>
+    </td>
+    <td rowSpan="2">
+      <DxButton
+        text="Save"
+        @click="$emit('onSaveButtonClick')"
+      />
+      <DxButton
+        text="Cancel"
+        @click="$emit('onCancelButtonClick')"
+      />
+    </td>
+  </tr>
+  <tr class="notes-row">
+    <td colspan="6">
+      <DxTextArea
+        :value="rowInfo!.data.Notes"
+        @value-changed="
+          $emit('onValueChanged', $event, 'Notes', rowInfo!.data.ID)
+        "
+      />
+    </td>
+  </tr>
 </template>
