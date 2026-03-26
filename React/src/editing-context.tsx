@@ -10,7 +10,6 @@ interface State {
   data: Employee[];
   editRowKey: number | undefined;
 }
-// eslint-disable-next-line no-unused-vars
 export type ContextProps = { state: State; dispatch: (type: Action) => void } | undefined;
 
 export const SAVING_SUCCESS = 'SAVING_SUCCESS';
