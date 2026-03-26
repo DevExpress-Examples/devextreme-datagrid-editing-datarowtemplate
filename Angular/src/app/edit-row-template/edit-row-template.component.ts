@@ -11,6 +11,7 @@ import { ValueChanged } from '../app.service';
   selector: 'edit-row-template',
   templateUrl: './edit-row-template.component.html',
   styleUrls: ['./edit-row-template.component.scss'],
+  standalone: false,
 })
 export class EditRowTemplateComponent {
   @Input() employee!: DataRowTemplateData;

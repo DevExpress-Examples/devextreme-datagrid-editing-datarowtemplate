@@ -9,15 +9,25 @@
     (onInitNewRow)="onInitNewRow($event)"
     dataRowTemplate="dataRowTemplateName"
   >
-    <dxi-column dataField="Prefix" caption="Title" [width]="70"></dxi-column>
-    <dxi-column dataField="FirstName"></dxi-column>
-    <dxi-column dataField="LastName"></dxi-column>
-    <dxi-column dataField="Position"></dxi-column>
-    <dxi-column dataField="BirthDate" dataType="date"></dxi-column>
-    <dxi-column dataField="HireDate" dataType="date"></dxi-column>
-    <dxi-column [width]="160"></dxi-column>
-    <dxo-toolbar>
-      <dxi-item location="after">
+    <dxi-data-grid-column
+      dataField="Prefix"
+      caption="Title"
+      [width]="70"
+    ></dxi-data-grid-column>
+    <dxi-data-grid-column dataField="FirstName"></dxi-data-grid-column>
+    <dxi-data-grid-column dataField="LastName"></dxi-data-grid-column>
+    <dxi-data-grid-column dataField="Position"></dxi-data-grid-column>
+    <dxi-data-grid-column
+      dataField="BirthDate"
+      dataType="date"
+    ></dxi-data-grid-column>
+    <dxi-data-grid-column
+      dataField="HireDate"
+      dataType="date"
+    ></dxi-data-grid-column>
+    <dxi-data-grid-column [width]="160"></dxi-data-grid-column>
+    <dxo-data-grid-toolbar>
+      <dxi-data-grid-item location="after">
         <div *dxTemplate>
           <dx-button
             text="Add new item"
@@ -25,8 +35,8 @@
             (onClick)="addNewItem()"
           ></dx-button>
         </div>
-      </dxi-item>
-    </dxo-toolbar>
+      </dxi-data-grid-item>
+    </dxo-data-grid-toolbar>
 
     <ng-container *dxTemplate="let employee of 'dataRowTemplateName'">
       <ng-container *ngIf="employee.isEditing">
