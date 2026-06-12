@@ -2,6 +2,7 @@ import {
   Component,
   Input, Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DataRowTemplateData } from 'devextreme/ui/data_grid';
 
@@ -9,6 +10,7 @@ import { DataRowTemplateData } from 'devextreme/ui/data_grid';
   selector: 'data-row-template',
   templateUrl: './data-row-template.component.html',
   styleUrls: ['./data-row-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class DataRowTemplateComponent {

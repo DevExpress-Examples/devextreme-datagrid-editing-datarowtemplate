@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import DataGrid, { DataChange, InitNewRowEvent, InitializedEvent } from 'devextreme/ui/data_grid';
 import { AppService, Employee, ValueChanged } from './app.service';
 
@@ -6,6 +6,7 @@ import { AppService, Employee, ValueChanged } from './app.service';
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class AppComponent {

@@ -3,6 +3,7 @@ import {
   Input,
   Output,
   EventEmitter,
+  ChangeDetectionStrategy
 } from '@angular/core';
 import { DataRowTemplateData } from 'devextreme/ui/data_grid';
 import { ValueChanged } from '../app.service';
@@ -11,6 +12,7 @@ import { ValueChanged } from '../app.service';
   selector: 'edit-row-template',
   templateUrl: './edit-row-template.component.html',
   styleUrls: ['./edit-row-template.component.scss'],
+  changeDetection: ChangeDetectionStrategy.Eager,
   standalone: false,
 })
 export class EditRowTemplateComponent {
